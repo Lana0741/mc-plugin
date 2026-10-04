@@ -1,5 +1,4 @@
 import { isRecord, parseJson, textOf } from './utils.js'
-import { checkBlocked } from '../../chat/block.js'
 
 const walkText = (node) => {
   if (node === null || node === undefined) return ''
@@ -79,16 +78,4 @@ const formatEvent = (eventData, config) => {
   return `[${serverName}] ${body}`
 }
 
-/**
- * 入站消息过滤：命中屏蔽规则的消息不再转发到群。
- *
- * @param {string} messageText 已格式化的消息文本
- * @param {Record<string, any>} config 全局配置
- * @param {Record<string, any>} [eventData] 原始事件数据
- * @returns {{ blocked: boolean, word: string }}
- */
-const filterEvent = (messageText, config, eventData = null) => {
-  return checkBlocked(messageText, config, eventData)
-}
-
-export { resolveEventData, formatEvent, filterEvent }
+export { resolveEventData, formatEvent }

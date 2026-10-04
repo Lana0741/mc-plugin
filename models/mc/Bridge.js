@@ -3,7 +3,7 @@ import { LOG_PREFIX_CLIENT, LOG_PREFIX_WS } from '../../components/logging/prefi
 import { createClient, createReverseClient } from '@cikeyqi/queqiao-node-sdk'
 import { bindClientEvents, buildForwardList, buildForwardOptions, buildReverseOptions } from './bridge/client.js'
 import { sendGroupMessage } from './bridge/dispatch.js'
-import { formatEvent, resolveEventData, filterEvent } from './bridge/event.js'
+import { formatEvent, resolveEventData } from './bridge/event.js'
 import { clientQueue, connectedNames, namesOf, namesForRoute, statusOf } from './bridge/route.js'
 import { isRecord, textOf, toError, toJson } from './bridge/utils.js'
 
@@ -170,14 +170,6 @@ export class McBridge {
 
     if (!serverItem) {
       if (this.debugMode) logger.info(LOG_PREFIX_WS + `服务器 ${serverName || 'unknown'} 未在配置中，忽略消息`)
-      return
-    }
-
-    let blockResult = filterEvent(messageText, config, rawEvent)
-    if (blockResult.blocked) {
-      if (this.debugMode) {
-        logger.info(LOG_PREFIX_WS + `消息命中屏蔽规则「${blockResult.word}」，不转发到群: ${messageText}`)
-      }
       return
     }
 
