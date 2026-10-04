@@ -5,5 +5,9 @@ mc_qq_ws_password: ""
 mc_qq_send_group_name: true
 mc_qq_display_server_name: true
 mc_qq_say_way: 说：
+mc_qq_self_message_enable: true
+mc_qq_self_message_require_keyword: true
+mc_qq_self_message_keywords:
+  - 达成了进度
 mc_qq_server_list: []
 debug_mode: false

@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import Config from '../components/Config.js'
 import mcBridge from '../models/mc/index.js'
-import { allowCommand, readCommand, toMcMessage, formatCommandResult } from '../models/chat/index.js'
+import { allowCommand, readCommand, toMcMessage, formatCommandResult, checkSelfMessage } from '../models/chat/index.js'
 
 export class Main extends plugin {
   constructor () {
@@ -24,6 +24,20 @@ export class Main extends plugin {
           await this.sendCommand(e, serverName, commandText, debugMode)
         }
         return
+      }
+
+      // 机器人自己发到群里的消息（玩家聊天/进度/进服等被转发到群的那条）
+      // 不再回传服务器，否则服务器里会出现两条同样的消息
+      let selfCheck = checkSelfMessage(e, serverItem, config)
+      if (selfCheck.skip) {
+        if (debugMode) {
+          logger.info(`[MC-PLUGIN] ${serverName} ${selfCheck.reason}，不传回服务器: ${e.msg}`)
+        }
+        return
+      }
+
+      if (debugMode) {
+        logger.info(`[MC-PLUGIN] ${serverName} 群聊将传回服务器 (user_id=${e.user_id} self_id=${e.self_id} card=${e.sender?.card ?? ''})`)
       }
 
       try {

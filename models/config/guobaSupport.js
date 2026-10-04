@@ -56,6 +56,46 @@ export function supportGuoba() {
         },
         {
           component: "Divider",
+          label: "机器人自身消息屏蔽",
+          componentProps: {
+            orientation: "left",
+            plain: true,
+          },
+        },
+        {
+          field: "mc_qq_self_message_enable",
+          label: "启用自身消息屏蔽",
+          bottomHelpMessage: "机器人自己发到群里的消息不再传回服务器，避免服务器里同一条消息出现两次",
+          component: "Switch",
+        },
+        {
+          field: "mc_qq_self_message_require_keyword",
+          label: "要求含连接词/关键词",
+          bottomHelpMessage: "开启后只屏蔽含上方「连接词」或下方关键词的消息；关闭后机器人发的任何消息都不传回",
+          component: "Switch",
+        },
+        {
+          field: "mc_qq_self_message_keywords",
+          label: "自定义关键词",
+          bottomHelpMessage: "除「连接词」外，消息中还含有任一词就不传回服务器（例如：达成了进度）",
+          component: "GTags",
+          componentProps: {
+            placeholder: '请输入关键词',
+            allowAdd: true,
+            allowDel: true,
+            showPrompt: true,
+            promptProps: {
+              content: '请输入关键词',
+              okText: '添加',
+              rules: [
+                { required: true, message: '关键词不能为空' },
+              ],
+            },
+            valueParser: ((value) => value.split(',') || []),
+          },
+        },
+        {
+          component: "Divider",
           label: "反向连接",
           componentProps: {
             orientation: "left",
@@ -278,6 +318,12 @@ export function supportGuoba() {
                 field: "mc_qq_chat_image_enable",
                 label: "启用CICode图片",
                 bottomHelpMessage: "是否将图片转换为 CICode 再发送到 MC",
+                component: "Switch",
+              },
+              {
+                field: "mc_qq_skip_self_message",
+                label: "屏蔽机器人自身消息",
+                bottomHelpMessage: "是否屏蔽本服务器下机器人自己发的群消息（防止消息被回传造成重复）",
                 component: "Switch",
               },
               {
