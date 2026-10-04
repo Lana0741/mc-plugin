@@ -55,6 +55,12 @@ export function supportGuoba() {
           },
         },
         {
+          field: "mc_qq_use_group_card",
+          label: "使用群昵称",
+          bottomHelpMessage: "转发到服务器时用群昵称（群名片）代替 QQ 昵称，便于整合包按名字匹配游戏 ID 显示头像",
+          component: "Switch",
+        },
+        {
           component: "Divider",
           label: "机器人自身消息屏蔽",
           componentProps: {

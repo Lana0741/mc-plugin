@@ -1,3 +1,24 @@
+/**
+ * 取转发到 MC 时显示的用户名。
+ *
+ * 部分整合包会按名字去匹配游戏 ID 来显示头像，此时应使用群昵称（群名片）；
+ * 群昵称为空时退回 QQ 昵称，最后退回 QQ 号。
+ *
+ * @param {any} e 消息事件
+ * @param {Record<string, any>} config 全局配置
+ * @returns {string}
+ */
+const resolveSenderName = (e, config) => {
+  let card = String(e?.sender?.card ?? '').trim()
+  let nickname = String(e?.sender?.nickname ?? '').trim()
+
+  if (config?.mc_qq_use_group_card !== false) {
+    return card || nickname || String(e.user_id ?? '未知用户')
+  }
+
+  return nickname || card || String(e.user_id ?? '未知用户')
+}
+
 const toMcMessage = (e, config, serverItem) => {
   let list = []
 
@@ -5,7 +26,7 @@ const toMcMessage = (e, config, serverItem) => {
     list.push({ text: `[${e.group_name}] `, color: 'aqua' })
   }
 
-  let nick = e.sender?.nickname || e.sender?.card || String(e.user_id ?? '未知用户')
+  let nick = resolveSenderName(e, config)
   let sayWord = config?.mc_qq_say_way || '说：'
   list.push({ text: nick, color: 'green' }, { text: ` ${sayWord} `, color: 'white' })
 
@@ -44,4 +65,4 @@ const toMcMessage = (e, config, serverItem) => {
   return list
 }
 
-export { toMcMessage }
+export { toMcMessage, resolveSenderName }

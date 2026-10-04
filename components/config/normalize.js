@@ -52,6 +52,7 @@ export function normalizeConfig (config = {}, defaults = {}) {
   normalized.mc_qq_send_group_name = toBoolean(normalized.mc_qq_send_group_name, true)
   normalized.mc_qq_display_server_name = toBoolean(normalized.mc_qq_display_server_name, true)
   normalized.mc_qq_say_way = toStringValue(normalized.mc_qq_say_way, '说：')
+  normalized.mc_qq_use_group_card = toBoolean(normalized.mc_qq_use_group_card, true)
   normalized.mc_qq_self_message_enable = toBoolean(normalized.mc_qq_self_message_enable, true)
   normalized.mc_qq_self_message_require_keyword = toBoolean(normalized.mc_qq_self_message_require_keyword, true)
   normalized.mc_qq_self_message_keywords = toStringArray(normalized.mc_qq_self_message_keywords)
