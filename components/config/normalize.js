@@ -51,6 +51,12 @@ export function normalizeConfig (config = {}, defaults = {}) {
   normalized.mc_qq_send_group_name = toBoolean(normalized.mc_qq_send_group_name, true)
   normalized.mc_qq_display_server_name = toBoolean(normalized.mc_qq_display_server_name, true)
   normalized.mc_qq_say_way = toStringValue(normalized.mc_qq_say_way, '说：')
+  normalized.mc_qq_block_enable = toBoolean(normalized.mc_qq_block_enable, true)
+  normalized.mc_qq_block_say_way = toBoolean(normalized.mc_qq_block_say_way, true)
+  normalized.mc_qq_block_words = toStringArray(normalized.mc_qq_block_words)
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .filter((item, index, list) => list.indexOf(item) === index)
   normalized.debug_mode = toBoolean(normalized.debug_mode, false)
 
   let serverList = Array.isArray(normalized.mc_qq_server_list)

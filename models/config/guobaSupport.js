@@ -56,6 +56,46 @@ export function supportGuoba() {
         },
         {
           component: "Divider",
+          label: "服务器消息屏蔽",
+          componentProps: {
+            orientation: "left",
+            plain: true,
+          },
+        },
+        {
+          field: "mc_qq_block_enable",
+          label: "启用消息屏蔽",
+          bottomHelpMessage: "总开关。开启后命中的消息不再转发回服务器，避免机器人自己发的消息被原样传回",
+          component: "Switch",
+        },
+        {
+          field: "mc_qq_block_say_way",
+          label: "屏蔽连接词",
+          bottomHelpMessage: "拦截机器人自己转发的消息（正文以上方「连接词」开头的那类）",
+          component: "Switch",
+        },
+        {
+          field: "mc_qq_block_words",
+          label: "自定义屏蔽词",
+          bottomHelpMessage: "消息中含有任一词则不转发回服务器；默认含「达成了进度」，不需要可直接删除",
+          component: "GTags",
+          componentProps: {
+            placeholder: '请输入屏蔽词',
+            allowAdd: true,
+            allowDel: true,
+            showPrompt: true,
+            promptProps: {
+              content: '请输入屏蔽词',
+              okText: '添加',
+              rules: [
+                { required: true, message: '屏蔽词不能为空' },
+              ],
+            },
+            valueParser: ((value) => value.split(',') || []),
+          },
+        },
+        {
+          component: "Divider",
           label: "反向连接",
           componentProps: {
             orientation: "left",
